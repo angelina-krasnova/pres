@@ -1,3 +1,3 @@
 # pres
 omamori-guide diplom presentation
-https://github.com/angelina-krasnova/pres.git
+https://angelina-krasnova.github.io/pres
