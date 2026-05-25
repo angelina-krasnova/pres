@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Защита курсовой | Японская мифология | Полноэкранная презентация</title>
+    <style>
+        /* ===== RESET И ПОЛНОЭКРАННАЯ БАЗА ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* легкий эффект презентации, текст все равно можно выделить */
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0A0A0A;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* убираем прокрутку всей страницы, контент слайда сам адаптируется */
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* основной контейнер — полный экран */
+        .fullscreen-presentation {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(178,34,34,0.08), #0a0a0a);
+            overflow-y: auto;  /* разрешаем прокрутку только внутри контента слайда, если нужно */
+            scroll-behavior: smooth;
+        }
+
+        /* скрываем старый navbar и все лишние обертки */
+        .navbar, .red-accent-line, .navigation-buttons, .slide-counter {
+            display: none !important;
+        }
+
+        /* контейнер для слайдов — как экран презентации */
+        .presentation-container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+        }
+
+        /* каждый слайд занимает всю доступную область */
+        .slide {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            animation: fadeInScale 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            padding: 2rem 3rem;
+            box-sizing: border-box;
+        }
+
+        .slide.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* внутренний контентный блок — без лишних рамок, но сохраняем читаемость */
+        .slide-content {
+            background: rgba(26, 26, 26, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 2.5rem 3rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            border: 1px solid rgba(178,34,34,0.3);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+
+        /* заголовки и тексты сохраним стиль, но чуть адаптивнее */
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, #fff, #ddd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .slide-title::after {
+            content: '';
+            width: 70px;
+            height: 3px;
+            background: #B22222;
+            display: block;
+            margin-top: 0.8rem;
+            border-radius: 2px;
+        }
+
+        .slide-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .text-content p {
+            color: #ccc;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .image-container {
+            width: 100%;
+            border-radius: 28px;
+            overflow: hidden;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s ease;
+        }
+        .image-container img, .image-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* карусели адаптивные */
+        .carousel-container {
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid #333;
+            background: #111;
+        }
+        .carousel-slides {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+        }
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        .carousel-slide img, .carousel-slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0,0,0,0.6);
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #aaa;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .carousel-dot.active {
+            background: #B22222;
+            transform: scale(1.3);
+            box-shadow: 0 0 8px #B22222;
+        }
+
+        /* мобильный ряд с видео */
+        .mobile-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .mobile-row-item {
+            flex: 1 1 200px;
+            max-width: 240px;
+            aspect-ratio: 9/16;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #B22222;
+            background: #1a1a1a;
+            transition: transform 0.2s;
+        }
+        .mobile-row-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+        }
+        .code-block {
+            background: #0f0f0f;
+            border-radius: 20px;
+            padding: 1.2rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            border-left: 3px solid #B22222;
+        }
+
+        /* ===== НОВАЯ КНОПКА НАЗАД ТОЛЬКО В ЛЕВОМ НИЖНЕМ УГЛУ ===== */
+        .back-only-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 9999;
+            background: rgba(20,20,20,0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(178,34,34,0.7);
+            color: #f0f0f0;
+            padding: 12px 26px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.3px;
+        }
+        .back-only-btn:hover {
+            background: #B22222;
+            border-color: #ff5e5e;
+            transform: translateX(-3px);
+            box-shadow: 0 8px 20px rgba(178,34,34,0.3);
+        }
+        /* индикатор слайда (минимальный) */
+        .slide-mini-indicator {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-family: monospace;
+            color: #ddd;
+            z-index: 9999;
+            border: 1px solid #333;
+            pointer-events: none;
+            font-weight: 500;
+        }
+        .slide-mini-indicator span {
+            color: #B22222;
+            font-weight: bold;
+        }
+
+        /* адаптивность: на маленьких экранах контент не вылезает */
+        @media (max-width: 900px) {
+            .slide {
+                padding: 1rem 1.2rem;
+            }
+            .slide-content {
+                padding: 1.5rem;
+            }
+            .slide-grid {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+            }
+            .slide-title {
+                font-size: 1.9rem;
+            }
+            .mobile-row-item {
+                max-width: 170px;
+            }
+            .code-grid {
+                grid-template-columns: 1fr;
+            }
+            .back-only-btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+                bottom: 18px;
+                left: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .slide {
+                padding: 0.8rem;
+            }
+            .slide-content {
+                padding: 1.2rem;
+            }
+            .mobile-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .mobile-row-item {
+                width: 85%;
+                max-width: 260px;
+            }
+        }
+
+        /* фикс для видео — автоплей */
+        video {
+            pointer-events: none; /* чтобы клики не мешали навигации презентации */
+        }
+        /* небольшие правки списков */
+        ul {
+            list-style: none;
+        }
+        ul li {
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+            color: #bbb;
+        }
+        ul li::before {
+            content: "•";
+            color: #B22222;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 4px;
+            top: -4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="fullscreen-presentation">
+    <div class="presentation-container">
+        <!-- СЛАЙД 1: Титульный (полный экран) -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <div class="slide-grid">
+                    <div class="text-content">
+                        <div class="university-header" style="font-size:1rem; color:#ccc; margin-bottom:20px;">
+                            ФГБОУ ВО «Башкирский государственный педагогический университет им. М. Акмуллы»<br>
+                            Колледж БГПУ им. М.Акмуллы
+                        </div>
+                        <h1 class="slide-title">Интерактивный гид по японской мифологии</h1>
+                        <p style="font-size: 1.4rem; color: white; margin-top: 20px;">Курсовая работа</p>
+                        <p style="font-size: 1.1rem; margin-top: 10px;">Краснова Ангелина, группа 9ИСИП42-22(26)</p>
+                    </div>
+                    <div class="image-container" style="aspect-ratio:1/1;">
+                        <img src="я.jpg" alt="Фото автора" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23B22222%22/><text x=%2250%22 y=%2250%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22white%22 dy=%22.3em%22>🌸</text></svg>'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 2: Цель и задачи -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <h2 class="slide-title">Цель и задачи</h2>
+                <div style="max-width: 850px; margin:0 auto;">
+                    <p style="font-size:1.3rem; color:#fff; margin-bottom:25px;"><strong>Цель:</strong> Спроектировать и разработать прототип интерактивного гида по японской мифологии.</p>
+                    <p style="font-size:1.2rem; color:#fff; margin-bottom:15px;"><strong>Задачи:</strong></p>
+                    <ul style="font-size:1.05rem;">
+                        <li>Проанализировать японскую мифологию</li>
+                        <li>Спроектировать структуру сайта</li>
+                        <li>Создать дизайн-концепцию в Figma</li>
+                        <li>Разработать адаптивный интерфейс</li>
+                        <li>Опубликовать проект на GitHub Pages</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 3: Актуальность -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <div class="slide-grid">
+                    <div class="text-content">
+                        <h2 class="slide-title">Актуальность и проблема</h2>
+                        <p>Отсутствие доступных русскоязычных ресурсов, сочетающих энциклопедические знания о японской мифологии с современными интерактивными технологиями.</p>
+                        <p>Существующие решения либо статичны, либо требуют установки приложений.</p>
+                    </div>
+                    <div class="image-container" style="aspect-ratio:1/1;">
+                        <img src="torii-gate.jpg" alt="Тории" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23333%22/><text x=%2250%22 y=%2250%22 font-size=%2230%22 text-anchor=%22middle%22 fill=%22%23B22222%22>⛩️</text></svg>'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 4: Структура -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                <h2 class="slide-title">Структура сайта</h2>
+                <div style="display:flex; justify-content:center; margin:1rem 0;">
+                    <div style="width:70%; max-width:500px; aspect-ratio:1/1; border-radius:28px; overflow:hidden; border:1px solid #333; background:#0a0a0a;">
+                        <img src="архитектура.png" alt="Схема архитектуры" style="width:100%; height:100%; object-fit:contain;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%23222%22/><text x=%2250%25%22 y=%2250%25%22 font-size=%2212%22 fill=%22white%22 text-anchor=%22middle%22>Главная→Каталог→Существа</text></svg>'">
+                    </div>
+                </div>
+                <div class="image-caption" style="text-align:center; color:#aaa;">Главная → Каталог существ → Страницы существ → Сказания → О проекте</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 5: Figma карусель (видео+скрин) -->
+        <div class="slide" id="slide5">
+            <div class="slide-content">
+                <h2 class="slide-title">Дизайн-концепция в Figma</h2>
+                <div class="carousel-container" id="figmaCarousel">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide active">
+                            <video autoplay loop muted playsinline>
+                                <source src="фигма_обзор.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="фигма_скрин.png" alt="Figma скрин">
+                        </div>
+                    </div>
+                    <div class="carousel-dots" id="figmaDots"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 6: Техреализация код -->
+        <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h2 class="slide-title">Техническая реализация</h2>
+                <div class="code-grid">
+                    <div class="code-block"><span style="color:#6A9955">/* CSS-переменные */</span><br>
+                    <span style="color:#569CD6">:root</span> {<br>
+                    &nbsp;&nbsp;<span style="color:#9CDCFE">--primary-red</span>: <span style="color:#CE9178">#B22222</span>;<br>
+                    &nbsp;&nbsp;<span style="color:#9CDCFE">--bg-dark</span>: <span style="color:#CE9178">#1A1A1A</span>;<br>
+                    }</div>
+                    <div class="code-block"><span style="color:#6A9955">/* Карточка существа */</span><br>
+                    &lt;<span style="color:#569CD6">div</span> <span style="color:#9CDCFE">class</span>=<span style="color:#CE9178">"preview-card"</span>&gt;<br>
+                    &nbsp;&nbsp;&lt;<span style="color:#569CD6">h3</span>&gt;Кицунэ&lt;/<span style="color:#569CD6">h3</span>&gt;<br>
+                    &lt;/<span style="color:#569CD6">div</span>&gt;</div>
+                    <div class="code-block"><span style="color:#6A9955">/* Бургер-меню JS */</span><br>
+                    burger.<span style="color:#569CD6">addEventListener</span>(<span style="color:#CE9178">'click'</span>, () => {<br>
+                    &nbsp;&nbsp;navMenu.classList.toggle(<span style="color:#CE9178">'active'</span>);<br>
+                    });</div>
+                    <div class="code-block"><span style="color:#6A9955">/* Grid адаптив */</span><br>
+                    .catalog-grid {<br>
+                    &nbsp;&nbsp;<span style="color:#9CDCFE">display</span>: grid;<br>
+                    &nbsp;&nbsp;<span style="color:#9CDCFE">grid-template-columns</span>: repeat(auto-fit, minmax(260px,1fr));<br>
+                    }</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 7: Десктоп версия (карусель видео) -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h2 class="slide-title">Готовый сайт (десктопная версия)</h2>
+                <div class="carousel-container" id="desktopCarousel">
+                    <div class="carousel-slides">
+                        <div class="carousel-slide active"><video autoplay loop muted playsinline src="главная.mp4"></video></div>
+                        <div class="carousel-slide"><video autoplay loop muted playsinline src="существа.mp4"></video></div>
+                        <div class="carousel-slide"><video autoplay loop muted playsinline src="сказания.mp4"></video></div>
+                        <div class="carousel-slide"><video autoplay loop muted playsinline src="о_проекте.mp4"></video></div>
+                    </div>
+                    <div class="carousel-dots" id="desktopDots"></div>
+                </div>
+                <div class="image-caption" style="text-align:center; color:#aaa;">Навигация, фильтры, адаптивность</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 8: Мобильная версия (ряд видео) -->
+        <div class="slide" id="slide8">
+            <div class="slide-content">
+                <h2 class="slide-title">Мобильная версия</h2>
+                <div class="mobile-row">
+                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="главная_мобилка.mp4"></video></div>
+                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="существа_мобилка.mp4"></video></div>
+                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="сказания_мобилка.mp4"></video></div>
+                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="о_проекте_мобилка.MP4"></video></div>
+                </div>
+                <div class="image-caption" style="text-align:center;">Бургер-меню, адаптивная верстка, touch-события</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 9: Заключение -->
+        <div class="slide" id="slide9">
+            <div class="slide-content">
+                <div class="slide-grid">
+                    <div class="text-content">
+                        <h2 class="slide-title">Спасибо за внимание!</h2>
+                        <p style="font-size:1.3rem; color:#fff;">Готова ответить на вопросы</p>
+                        <p>Курсовая работа выполнена,<br>прототип доступен:</p>
+                        <p style="color:#B22222;">angelina-krasnova.github.io/japanese-mythology-guide</p>
+                        <p style="margin-top:20px; font-style:italic;">P.S. Яэ Мико — тоже кицунэ 🦊</p>
+                    </div>
+                    <div class="image-container" style="background:linear-gradient(135deg,#B22222,#6b0000);">
+                        <video autoplay loop muted playsinline src="яэ.mp4"></video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ЕДИНСТВЕННАЯ КНОПКА: НАЗАД (в левом нижнем углу) -->
+<button class="back-only-btn" id="onlyBackBtn">◀  Назад</button>
+<div class="slide-mini-indicator" id="slideCounterIndicator"><span id="indicatorCurrent">1</span> / <span id="indicatorTotal">9</span></div>
+
+<script>
+    (function() {
+        // ПОЛНОЭКРАННАЯ ПРЕЗЕНТАЦИЯ: вперед по клику в любом месте экрана (кроме кнопки назад)
+        // назад — ТОЛЬКО кнопка в левом углу.
+        const slides = document.querySelectorAll('.slide');
+        let currentIdx = 0;
+        const total = slides.length;
+        
+        const backBtn = document.getElementById('onlyBackBtn');
+        const indicatorCurrentSpan = document.getElementById('indicatorCurrent');
+        const indicatorTotalSpan = document.getElementById('indicatorTotal');
+        indicatorTotalSpan.innerText = total;
+        
+        function updateSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= total) index = total - 1;
+            if (index === currentIdx) return;
+            
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            currentIdx = index;
+            indicatorCurrentSpan.innerText = currentIdx + 1;
+            
+            // автоплей видео на активном слайде
+            const activeSlide = slides[currentIdx];
+            const videos = activeSlide.querySelectorAll('video');
+            videos.forEach(video => {
+                video.play().catch(e => console.log("autoplay blocked", e));
+            });
+            // небольшая пауза для остановки видео на других слайдах
+            slides.forEach((slide, i) => {
+                if (i !== currentIdx) {
+                    slide.querySelectorAll('video').forEach(v => v.pause());
+                }
+            });
+        }
+        
+        // ФУНКЦИЯ ДЛЯ ПЕРЕХОДА ВПЕРЁД (по клику на фон)
+        function nextSlide() {
+            if (currentIdx + 1 < total) {
+                updateSlide(currentIdx + 1);
+            }
+        }
+        
+        // НАЗАД только через кнопку
+        function prevSlide() {
+            if (currentIdx - 1 >= 0) {
+                updateSlide(currentIdx - 1);
+            }
+        }
+        
+        // Обработчик клика по всей области презентации (движение вперед)
+        // НО не срабатывать, если клик был по кнопке "Назад" или по её дочерним элементам, 
+        // также не мешать кликам по карусельным точкам / интерактиву.
+        const fullArea = document.querySelector('.fullscreen-presentation');
+        fullArea.addEventListener('click', (e) => {
+            // если клик произошел по кнопке "Назад" или внутри неё — не переключаем вперед
+            let target = e.target;
+            let isBackButton = false;
+            while(target && target !== document.body) {
+                if(target.id === 'onlyBackBtn' || target.closest('#onlyBackBtn')) {
+                    isBackButton = true;
+                    break;
+                }
+                target = target.parentElement;
+            }
+            // также не мешаем точкам карусели (они имеют свой обработчик, но они тоже внутри слайда, клик отработает и переключит слайд - это допустимо)
+            // но чтобы точка карусели не срабатывала дважды - не блокируем, пусть переключение презентации идёт только если 
+            // не нажата кнопка Назад, но если клик по точке, то должен отработать ее собственный перебор карусели, а затем презентация не должна сработать.
+            // Лучше дополнительно: если клик по элементу с классом carousel-dot или внутри карусели - не переключаем слайд презентации вперед, чтобы не путать.
+            const isOnCarouselControl = e.target.closest('.carousel-dot') || e.target.closest('.carousel-container');
+            
+            if (!isBackButton && !isOnCarouselControl) {
+                nextSlide();
+            }
+        });
+        
+        // Кнопка назад (только левый нижний угол)
+        backBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            prevSlide();
+        });
+        
+        // Поддержка клавиш: стрелка вправо - вперед, стрелка влево - назад (НО по заданию: назад только кнопка, но я оставлю левую стрелку для удобства? 
+        // По условию: "назад только если кнопка в нижнем левом углу". Значит стрелка влево не должна работать назад.
+        // Стрелку вправо оставим для вперед, а левую отключим полностью.
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextSlide();
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                // НЕ ДЕЛАЕМ НАЗАД - строго по заданию, только кнопка.
+                // return;
+            }
+            // Также клавиша Space или Enter иногда - можно настроить, но оставим только вправо.
+        });
+        
+        // Инициализация каруселей (сохраняем оригинальную логику изначального кода, но с автосменой 5 сек)
+        function initCarousel(containerId, dotsId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const slidesCarousel = container.querySelectorAll('.carousel-slide');
+            const dotsContainer = document.getElementById(dotsId);
+            if (!slidesCarousel.length || !dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            let currentCarousel = 0;
+            slidesCarousel.forEach((_, idx) => {
+                const dot = document.createElement('div');
+                dot.classList.add('carousel-dot');
+                if(idx === 0) dot.classList.add('active');
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showCarouselSlide(idx);
+                });
+                dotsContainer.appendChild(dot);
+            });
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            function showCarouselSlide(index) {
+                if(index < 0 || index >= slidesCarousel.length) return;
+                slidesCarousel.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(d => d.classList.remove('active'));
+                slidesCarousel[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentCarousel = index;
+            }
+            setInterval(() => {
+                let next = (currentCarousel + 1) % slidesCarousel.length;
+                showCarouselSlide(next);
+            }, 5000);
+            showCarouselSlide(0);
+        }
+        
+        initCarousel('figmaCarousel', 'figmaDots');
+        initCarousel('desktopCarousel', 'desktopDots');
+        
+        // Запуск видео на первом активном слайде
+        setTimeout(() => {
+            const activeVideos = document.querySelector('.slide.active')?.querySelectorAll('video');
+            if(activeVideos) activeVideos.forEach(v => v.play().catch(e=>{}));
+        }, 200);
+        
+        // гарантия, что слайд 0 активен
+        updateSlide(0);
+    })();
+</script>
+</body>
+</html>
