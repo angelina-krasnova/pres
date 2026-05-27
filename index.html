@@ -161,14 +161,14 @@
         }
 
         /* карусель (только для десктопной версии) */
-        /* .carousel-container {
+        .carousel-container {
             position: relative;
             width: 100%;
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid #333333;
             background: #000;
-        } */
+        }
 
         .carousel-slides {
             position: relative;
@@ -259,7 +259,7 @@
         .mobile-row-item {
             flex: 1 1 220px;
             max-width: 260px;
-            aspect-ratio: 9/16;
+            aspect-ratio: 9/18;
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid #B22222;
@@ -345,47 +345,6 @@
             font-weight: bold;
         }
 
-        /* адаптивность */
-        @media (max-width: 900px) {
-            .slide-content {
-                padding: 25px;
-                width: 95%;
-            }
-            .slide-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .slide-title {
-                font-size: 1.8rem;
-            }
-            .university-header {
-                font-size: 1.2rem;
-            }
-            .code-grid {
-                grid-template-columns: 1fr;
-            }
-            .mobile-row-item {
-                max-width: 180px;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .slide-content {
-                padding: 20px;
-            }
-            .mobile-row {
-                flex-direction: column;
-                align-items: center;
-            }
-            .mobile-row-item {
-                width: 80%;
-                max-width: 260px;
-            }
-        }
-        
-        video {
-            pointer-events: none;
-        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
@@ -525,33 +484,7 @@
             </div>
         </div>
 
-        <!-- СЛАЙД 5: Структура сайта -->
-        <div class="slide" id="slide4">
-            <div class="slide-content">
-                <h2 class="slide-title">Структура сайта</h2>
-                <div style="display:flex; justify-content:center; margin:20px 0;">
-                    <div style=" border-radius:28px; overflow:hidden; border:1px solid #333; ">
-                        <img src="архитектура.png" alt="Схема архитектуры" style="width:100%; height:100%; object-fit:contain;">
-                    </div>
-                </div>
-                <div class="image-caption" style="text-align:center;">Главная → Каталог существ → Страница существа → Сказания → Карта → О проекте</div>
-            </div>
-        </div>
-
-        <!-- СЛАЙД 6: Дизайн-концепция в Figma -->
-        <div class="slide" id="slide5">
-            <div class="slide-content">
-                <h2 class="slide-title">Дизайн-концепция в Figma</h2>
-                <div style="aspect-ratio:21/9; overflow:hidden; border-radius:24px;">
-                    <video autoplay loop muted playsinline style="width:100%; height:115%; object-fit:cover;">
-                        <source src="фигма_обзор.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="image-caption" style="margin-top:12px;">Разработка интерфейса в Figma</div>
-            </div>
-        </div>
-
-        <!-- СЛАЙД 7: Требования и средства разработки -->
+        <!-- СЛАЙД 5: Требования и средства разработки -->
         <div class="slide" id="slide-tools">
             <div class="slide-content">
                 <h2 class="slide-title">Требования и средства разработки</h2>
@@ -610,8 +543,33 @@
             </div>
         </div>
 
-        <!-- СЛАЙД 8: Техническая реализация -->
+        <!-- СЛАЙД 6: Структура сайта -->
         <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h2 class="slide-title">Структура сайта</h2>
+                <div style="display:flex; justify-content:center; margin:20px 0;">
+                    <div style=" border-radius:28px; overflow:hidden; border:1px solid #333; ">
+                        <img src="архитектура.png" alt="Схема архитектуры" style="width:100%; height:100%; object-fit:contain;">
+                    </div>
+                </div>
+                <div class="image-caption" style="text-align:center;">Главная → Каталог существ → Страница существа → Сказания → Карта → О проекте</div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 7: Дизайн-концепция в Figma -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h2 class="slide-title">Дизайн-концепция в Figma</h2>
+                <div style="aspect-ratio:21/9; overflow:hidden; border-radius:24px;">
+                     <video autoplay loop muted playsinline style="width:100%; height:125%; object-fit:cover; position: relative; top: -25%;">
+                        <source src="фигма_обзор.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- СЛАЙД 8: Техническая реализация -->
+        <div class="slide" id="slide8">
             <div class="slide-content">
                 <h2 class="slide-title">Техническая реализация</h2>
                 <div class="code-grid">
@@ -624,77 +582,85 @@
                         &nbsp;&nbsp;<span class="attr">--bg-card</span>: <span class="string">#2A2A2A</span>;<br>
                         &nbsp;&nbsp;<span class="attr">--text-light</span>: <span class="string">#F0F0F0</span>;<br>
                         &nbsp;&nbsp;<span class="attr">--text-muted</span>: <span class="string">#AAAAAA</span>;<br>
-                        &nbsp;&nbsp;<span class="attr">--border-color</span>: <span class="string">#333333</span>;<br>
                         }
                     </div>
                     
                     <div class="code-block">
-                        <span class="comment">/* Адаптивная сетка каталога (CSS Grid) */</span><br>
-                        .<span class="keyword">catalog-grid</span> {<br>
-                        &nbsp;&nbsp;<span class="attr">display</span>: grid;<br>
-                        &nbsp;&nbsp;<span class="attr">grid-template-columns</span>: <span class="string">repeat(auto-fit, minmax(280px, 1fr))</span>;<br>
-                        &nbsp;&nbsp;<span class="attr">gap</span>: <span class="string">30px</span>;<br>
-                        &nbsp;&nbsp;<span class="attr">padding</span>: <span class="string">20px</span>;<br>
-                        }<br><br>
-                        <span class="comment">/* Карточка существа */</span><br>
-                        .<span class="keyword">creature-card</span> {<br>
-                        &nbsp;&nbsp;<span class="attr">background</span>: <span class="string">var(--bg-card)</span>;<br>
-                        &nbsp;&nbsp;<span class="attr">border-radius</span>: <span class="string">24px</span>;<br>
-                        &nbsp;&nbsp;<span class="attr">transition</span>: <span class="string">transform 0.3s</span>;<br>
+                        <span class="comment">/* Загрузка данных из JSON */</span><br>
+                        <span class="keyword">async function</span> <span class="keyword">loadCreaturesData</span>() {<br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> response = <span class="keyword">await</span> <span class="keyword">fetch</span>(<span class="string">'data/creatures.json'</span>);<br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="keyword">json</span>();<br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> creatures = data.creatures;<br>
+                        &nbsp;&nbsp;displayCatalog(creatures);<br>
+                        &nbsp;&nbsp;initFilters(creatures);<br>
                         }
                     </div>
                     
                     <div class="code-block">
-                        <span class="comment">/* Бургер-меню (JavaScript) */</span><br>
-                        <span class="keyword">const</span> burger = <span class="keyword">document</span>.<span class="keyword">getElementById</span>(<span class="string">'burgerMenu'</span>);<br>
-                        <span class="keyword">const</span> navMenu = <span class="keyword">document</span>.<span class="keyword">getElementById</span>(<span class="string">'navMenu'</span>);<br><br>
-                        burger.<span class="keyword">addEventListener</span>(<span class="string">'click'</span>, () => {<br>
-                        &nbsp;&nbsp;navMenu.<span class="keyword">classList</span>.<span class="keyword">toggle</span>(<span class="string">'active'</span>);<br>
-                        &nbsp;&nbsp;<span class="keyword">document</span>.<span class="keyword">body</span>.<span class="keyword">classList</span>.<span class="keyword">toggle</span>(<span class="string">'menu-open'</span>);<br>
-                        });
+                        <span class="comment">/* Фильтрация каталога по типам */</span><br>
+                        <span class="keyword">function</span> <span class="keyword">initFilters</span>(creatures) {<br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> filterBtns = <span class="keyword">document</span>.<span class="keyword">querySelectorAll</span>(<span class="string">'.filter-btn'</span>);<br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> cards = <span class="keyword">document</span>.<span class="keyword">querySelectorAll</span>(<span class="string">'.preview-card'</span>);<br>
+                        &nbsp;&nbsp;filterBtns.<span class="keyword">forEach</span>(btn => {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;btn.<span class="keyword">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span> filter = <span class="keyword">this</span>.<span class="keyword">dataset</span>.filter;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cards.<span class="keyword">forEach</span>(card => {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> (filter === <span class="string">'all'</span> || card.<span class="keyword">dataset</span>.type === filter) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;card.style.display = <span class="string">'block'</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="keyword">else</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;card.style.display = <span class="string">'none'</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});});});}
                     </div>
                     
                     <div class="code-block">
-                        <span class="comment">/* HTML-структура карточки существа */</span><br>
-                        &lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="string">"preview-card"</span>&gt;<br>
-                        &nbsp;&nbsp;&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="string">"preview-card-image"</span>&gt;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="string">"kitsune.jpg"</span> <span class="attr">alt</span>=<span class="string">"Кицунэ"</span>&gt;<br>
-                        &nbsp;&nbsp;&lt;/<span class="tag">div</span>&gt;<br>
-                        &nbsp;&nbsp;&lt;<span class="tag">h3</span>&gt;Кицунэ&lt;/<span class="tag">h3</span>&gt;<br>
-                        &nbsp;&nbsp;&lt;<span class="tag">p</span>&gt;Мудрая лиса-оборотень из японских легенд&lt;/<span class="tag">p</span>&gt;<br>
-                        &nbsp;&nbsp;&lt;<span class="tag">button</span>&gt;Подробнее&lt;/<span class="tag">button</span>&gt;<br>
-                        &lt;/<span class="tag">div</span>&gt;
+                        <span class="comment">/* Динамическое создание карточек */</span><br>
+                        <span class="keyword">function</span> <span class="keyword">displayCatalog</span>(creatures) {<br>
+                        &nbsp;&nbsp;<span class="keyword">const</span> catalogGrid = <span class="keyword">document</span>.<span class="keyword">getElementById</span>(<span class="string">'catalogGrid'</span>);<br>
+                        &nbsp;&nbsp;catalogGrid.innerHTML = <span class="string">''</span>;<br>
+                        &nbsp;&nbsp;creatures.<span class="keyword">forEach</span>(creature => {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span> card = <span class="keyword">document</span>.<span class="keyword">createElement</span>(<span class="string">'div'</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;card.className = <span class="string">'preview-card'</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;card.dataset.type = creature.type;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;card.innerHTML = `<span class="string">&lt;h3&gt;${creature.name}&lt;/h3&gt;</span>`;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;catalogGrid.appendChild(card);<br>
+                        &nbsp;&nbsp;});<br>
+                        }
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- СЛАЙД 9: Готовый сайт (десктопная версия) — карусель с видео -->
-        <div class="slide" id="slide7">
+        <div class="slide" id="slide9">
             <div class="slide-content">
                 <h2 class="slide-title">Готовый сайт</h2>
-                <div style="margin: 0 auto; width:80%; aspect-ratio:17/9; overflow:hidden;" class="carousel-container" id="desktopCarousel">
+                <div style="margin: 0 auto; width:85%; aspect-ratio:17/9; overflow:hidden;" class="carousel-container" id="desktopCarousel">
                     <div class="carousel-slides" >
-                        <div class="carousel-slide active"><video autoplay loop muted playsinline src="главная.mp4"></video></div>
+                        <div class="carousel-slide active"><video autoplay loop muted playsinline src="главная_опроекте.mp4"></video></div>
                         <div class="carousel-slide"><video autoplay loop muted playsinline src="существа.mp4"></video></div>
+                        <div class="carousel-slide"><video autoplay loop muted playsinline src="карта.mp4"></video></div>
                         <div class="carousel-slide"><video autoplay loop muted playsinline src="сказания.mp4"></video></div>
-                        <div class="carousel-slide"><video autoplay loop muted playsinline src="о_проекте.mp4"></video></div>
                     </div>
                     <div class="carousel-dots" id="desktopDots"></div>
                 </div>
-                <div class="image-caption">Навигация по страницам, работа фильтров, qr код</div>
+                <div class="image-caption">Навигация по страницам, работа фильтров, qr код, интерактивная карта</div>
             </div>
         </div>
 
         <!-- СЛАЙД 10: Мобильная версия -->
-        <div class="slide" id="slide8">
+        <div class="slide" id="slide10">
             <div class="slide-content">
                 <h2 class="slide-title">Мобильная версия</h2>
                 <div class="mobile-row">
-                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="главная_мобилка.mp4"></video></div>
+                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="главная_опроекте_мобилка.mp4"></video></div>
                     <div class="mobile-row-item"><video autoplay loop muted playsinline src="существа_мобилка.mp4"></video></div>
-                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="сказания_мобилка.mp4"></video></div>
-                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="о_проекте_мобилка.MP4"></video></div>
+                    <div class="mobile-row-item">
+                        <video autoplay loop muted playsinline style="width: 100%; height: 135%; object-fit: cover; margin-top: -28%;">
+                            <source src="яэ_показ.MP4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="mobile-row-item"><video autoplay loop muted playsinline src="карта_сказания_мобилка.mp4"></video></div>
                 </div>
                 <div class="image-caption" style="color: #CCCCCC;">Бургер-меню, адаптивная верстка, touch-события</div>
             </div>
@@ -868,7 +834,7 @@
             setInterval(() => {
                 let next = (currentCarousel + 1) % slidesCarousel.length;
                 showCarouselSlide(next);
-            }, 5000);
+            }, 8000);
             showCarouselSlide(0);
         }
         
