@@ -346,7 +346,6 @@
         }
 
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -685,28 +684,15 @@
                         </div>
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px;">
-                        <p style="color: #B22222; font-size: 1rem;">Перейти к сайту:</p>
-                        <div id="qrcode"></div>
-                        <p style="font-size: 0.8rem; color: #aaa; text-align: center; word-break: break-all;">
+                        <div class="image-container square" style="aspect-ratio:1/1; background: linear-gradient(135deg, #B22222, #8B0000);">
+                            <video autoplay loop muted playsinline style="object-fit: cover; width:100%; height:100%;">
+                                <source src="яэ.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <p style="color: #B22222; font-size: 1.2rem;">Перейти к сайту:</p>                        
+                        <p style="font-size: 1.2rem; color: #aaa; text-align: center; word-break: break-all;">
                             angelina-krasnova.github.io/omamori-guide
                         </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- СЛАЙД 12: Спасибо за внимание! -->
-        <div class="slide" id="slide-thanks">
-            <div class="slide-content">
-                <div class="slide-grid">
-                    <div class="text-content">
-                        <h1 class="slide-title">Спасибо за внимание!</h1>
-                        <p style="font-size: 1.3rem; color: white; margin-top: 20px;">Готова ответить на вопросы</p>
-                    </div>
-                    <div class="image-container square" style="aspect-ratio:1/1; background: linear-gradient(135deg, #B22222, #8B0000);">
-                        <video autoplay loop muted playsinline style="object-fit: cover; width:100%; height:100%;">
-                            <source src="яэ.mp4" type="video/mp4">
-                        </video>
                     </div>
                 </div>
             </div>
@@ -848,21 +834,6 @@
         
         updateSlide(0);
     })();
-
-    // Генерация QR-кода на слайде заключения (белый фон, красный QR)
-    setTimeout(function() {
-        const qrContainer = document.getElementById('qrcode');
-        if (qrContainer && !qrContainer.hasChildNodes()) {
-            new QRCode(qrContainer, {
-                text: 'https://angelina-krasnova.github.io/omamori-guide',
-                width: 450,
-                height: 450,
-                colorDark: '#ffffff',
-                colorLight: '#2a2a2af2',  
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        }
-    }, 500);
 </script>
 </body>
 </html>
